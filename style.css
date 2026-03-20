@@ -79,3 +79,40 @@ input:focus, textarea:focus {
   box-shadow: 0 0 12px #00dbde;
 }
 
+/* BUTTON */
+button {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, #00dbde, #fc00ff);
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #fc00ff;
+}
+
+/* SNIPPET CARD */
+.snippet {
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.snippet:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(252,0,255,0.3);
+}
+
+.snippet h3 {
+  margin-bottom: 8px;
+  color: #00dbde;
+}
