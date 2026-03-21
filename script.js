@@ -14,7 +14,7 @@ function addSnippet() {
     return;
   }
 
-  snippets.push({ title, code, language });
+  snippets.unshift({ title, code, language });
 
   localStorage.setItem("snippets", JSON.stringify(snippets));
 
@@ -29,12 +29,17 @@ function displaySnippets(filtered = snippets) {
   container.innerHTML = "";
 
   if (filtered.length === 0) {
-    container.innerHTML = "<p>No snippets yet 👀</p>";
+    container.innerHTML = `
+      <div class="empty-state">
+        <i style="font-style: normal; font-size: 40px;">📂</i>
+        <p>No snippets found</p>
+      </div>`;
     return;
   }
 
-  filtered.forEach((s, index) => {
+  filtered.forEach((s) => {
     let lang = s.language || "javascript";
+    let globalIndex = snippets.indexOf(s);
 
     container.innerHTML += `
       <div class="snippet">
@@ -43,8 +48,9 @@ function displaySnippets(filtered = snippets) {
 ${escapeHTML(s.code)}
         </code></pre>
 
-        <button onclick="copyCode(${index})">Copy</button>
-        <button onclick="deleteSnippet(${index})">Delete</button>
+        <button onclick="copyCode(${globalIndex})">Copy</button>
+        <button onclick="editSnippet(${globalIndex})">Edit</button>
+        <button onclick="deleteSnippet(${globalIndex})">Delete</button>
       </div>
     `;
   });
@@ -74,8 +80,22 @@ function copyCode(index) {
   }, 2000);
 }
 
+// EDIT
+function editSnippet(index) {
+  let s = snippets[index];
+  document.getElementById("title").value = s.title;
+  document.getElementById("code").value = s.code;
+  let langElement = document.getElementById("language");
+  if (langElement) langElement.value = s.language || "javascript";
+  
+  deleteSnippet(index, true);
+}
+
 // DELETE
-function deleteSnippet(index) {
+function deleteSnippet(index, skipConfirm = false) {
+  if (!skipConfirm && !confirm("Are you sure you want to delete this snippet?")) {
+    return;
+  }
   snippets.splice(index, 1);
   localStorage.setItem("snippets", JSON.stringify(snippets));
   displaySnippets();
@@ -91,6 +111,12 @@ function searchSnippet() {
   );
 
   displaySnippets(filtered);
+}
+
+// CLEAR SEARCH
+function clearSearch() {
+  document.getElementById("search").value = "";
+  searchSnippet();
 }
 
 // INIT

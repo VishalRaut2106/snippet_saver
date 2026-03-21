@@ -22,6 +22,7 @@ header h1 {
   font-size: 28px;
   background: linear-gradient(90deg, #00dbde, #fc00ff);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 }
 
@@ -59,7 +60,7 @@ header h1 {
 }
 
 /* INPUTS */
-input, textarea {
+input, textarea, select {
   padding: 12px;
   border-radius: 10px;
   border: none;
@@ -69,13 +70,23 @@ input, textarea {
   transition: 0.3s;
 }
 
+select {
+  appearance: none;
+  cursor: pointer;
+}
+
+select option {
+  background: #1f1c2c;
+  color: white;
+}
+
 textarea {
   height: 180px;
   resize: none;
 }
 
 /* INPUT GLOW */
-input:focus, textarea:focus {
+input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 12px #00dbde;
 }
 
@@ -136,9 +147,47 @@ pre {
 }
 
 /* SEARCH BAR */
-.right input {
-  width: 100%;
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
   margin-bottom: 15px;
+}
+
+.search-box input {
+  width: 100%;
+  margin-bottom: 0;
+  padding-right: 40px;
+}
+
+#clear-btn {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  padding: 0;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+#clear-btn:hover {
+  color: white;
+  transform: none;
+  box-shadow: none;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: rgba(255,255,255,0.5);
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
 /* TOAST */
@@ -167,4 +216,25 @@ pre {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(#00dbde, #fc00ff);
   border-radius: 10px;
-    }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+  }
+  .container {
+    flex-direction: column;
+    height: auto;
+    overflow-y: visible;
+  }
+  
+  .left, .right {
+    width: 100%;
+    height: auto;
+  }
+  
+  .right {
+    overflow-y: visible;
+  }
+}
